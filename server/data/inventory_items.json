@@ -1,19 +1,19 @@
 {
     "effect_shrink": {
         "type": "effect",
-        "name_full": "Shrink avatar",
+        "name_full": "Achicar avatar",
         "img": "/media/items/effect-shrink.png",
         "effect": "effect_shrink"
     },
     "effect_unshrink": {
         "type": "effect",
-        "name_full": "Unshrink avatar",
+        "name_full": "Normalizar avatar",
         "img": "/media/items/effect-unshrink.png",
         "effect": null
     },    
     "roombg_cherry_jubilees_guest_room": {
         "type": "room_background",
-        "name_full": "Room Background - Cherry Jubilee's Guest Room",
+        "name_full": "Fondo de Sala - Sala para invitados de Cherry Jubilee",
         "img": "/media/rooms/house/cherry-jubilees-guest-room.png",
         "background_data": {
             "data": "/media/rooms/house/cherry-jubilees-guest-room.png",
@@ -23,7 +23,7 @@
     },
     "roombg_pinkies_room": {
         "type": "room_background",
-        "name_full": "Room Background - Pinkie's Room",
+        "name_full": "Fondo de Sala - Habitación de Pinkie",
         "img": "/media/rooms/house/pinkies-room.png",
         "background_data": {
             "data": "/media/rooms/house/pinkies-room.png",
@@ -33,7 +33,7 @@
     },
     "roombg_canterlot_bedroom": {
         "type": "room_background",
-        "name_full": "Room Background - Canterlot Bedroom",
+        "name_full": "Fondo de Sala - Habitación de Canterlot",
         "img": "/media/rooms/house/canterlot-bedroom.png",
         "background_data": {
             "data": "/media/rooms/house/canterlot-bedroom.png",
@@ -43,7 +43,7 @@
     },
     "roombg_dashies_bedroom": {
         "type": "room_background",
-        "name_full": "Room Background - Dashie's Bedroom",
+        "name_full": "Fondo de Sala - Habitación de Dashie",
         "img": "/media/rooms/house/dashies-bedroom.png",
         "background_data": {
             "data": "/media/rooms/house/dashies-bedroom.png",
@@ -53,7 +53,7 @@
     },
     "roombg_shining_armors_apartments": {
         "type": "room_background",
-        "name_full": "Room Background - Shining Armor's Apartments",
+        "name_full": "Fondo de Sala - Apartamento de Shining Armor",
         "img": "/media/rooms/house/shining-armors-apartments.png",
         "background_data": {
             "data": "/media/rooms/house/shining-armors-apartments.png",
@@ -63,7 +63,7 @@
     },
     "roombg_princess_celestias_room": {
         "type": "room_background",
-        "name_full": "Room Background - Princess Celestia's Room",
+        "name_full": "Fondo de Sala - Sala de la Princesa Celestia",
         "img": "/media/rooms/house/princess-celestias-room.png",
         "background_data": {
             "data": "/media/rooms/house/princess-celestias-room.png",
@@ -73,7 +73,7 @@
     },
     "roombg_madam_pinkies_tent": {
         "type": "room_background",
-        "name_full": "Room Background - Madam Pinkie's Tent",
+        "name_full": "Fondo de Sala - Tienda de Madame Pinkie",
         "img": "/media/rooms/house/madam-pinkies-tent.png",
         "background_data": {
             "data": "/media/rooms/house/madam-pinkies-tent.png",
