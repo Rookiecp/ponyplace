@@ -2,7 +2,7 @@
     {
         "type": "real",
         "name": " party_barn",
-        "name_full": "Party Barn",
+        "name_full": "Sala de fiesta",
         "thumbnail": "/media/rooms/party-barn-thumb.png",
         "background": {
             "data": "/media/rooms/party-barn.png",
@@ -19,7 +19,7 @@
             }
         ],
         "user_count": 0,
-        "user_noun": "dancer",
+        "user_noun": "bailarines",
         "unlisted": true
     },
     {
@@ -33,7 +33,7 @@
             "height": 660
         },
         "user_count": 0,
-        "user_noun": "chocolate raindrops",
+        "user_noun": "gotas de chocoleche",
         "unlisted": false
     },
     {
@@ -47,13 +47,13 @@
             "height": 660
         },
         "user_count": 0,
-        "user_noun": "ponies",
+        "user_noun": "ponis",
         "unlisted": false
     },
     {
         "type": "real",
         "name": "outside_library",
-        "name_full": "The Library",
+        "name_full": "La Librería",
         "thumbnail": "/media/rooms/outside-library-thumb.png",
         "background": {
             "data": "/media/rooms/outside-library.png",
@@ -61,21 +61,21 @@
             "height": 660
         },
         "user_count": 0,
-        "user_noun": "bright sparks",
+        "user_noun": "cerebritos",
         "unlisted": false
     },
     {
         "type": "real",
         "name": "library",
         "thumbnail": "/media/rooms/library-thumb.png",
-        "name_full": "Inside the Library",
+        "name_full": "Dentro de la Librería",
         "background": {
             "data": "/media/rooms/library.png",
             "width": 1173,
             "height": 660
         },
         "user_count": 0,
-        "user_noun": "bright sparks",
+        "user_noun": "cerebritos",
         "unlisted": false
     },
     {
@@ -89,13 +89,13 @@
             "height": 660
         },
         "user_count": 0,
-        "user_noun": "party animals",
+        "user_noun": "fiester@s",
         "unlisted": false
     },
     {
         "type": "real",
         "name": "sugarcube_corner",
-        "name_full": "Inside Sugarcube Corner",
+        "name_full": "Dentro del Sugarcube Corner",
         "thumbnail": "/media/rooms/sugarcubecorner-thumb.png",
         "background": {
             "data": "/media/rooms/sugarcubecorner.png",
@@ -103,13 +103,13 @@
             "height": 660
         },
         "user_count": 0,
-        "user_noun": "party animals",
+        "user_noun": "fiester@s",
         "unlisted": false
     },
     {
         "type": "real",
         "name": "carousel_boutique",
-        "name_full": "Carousel Boutique",
+        "name_full": "Boutique Carrusel",
         "thumbnail": "/media/rooms/carousel-boutique-thumb.png",
         "background": {
             "data": "/media/rooms/carousel-boutique.png",
@@ -117,13 +117,13 @@
             "height": 660
         },
         "user_count": 0,
-        "user_noun": "fashionistas",
+        "user_noun": "ponis fashions",
         "unlisted": false
     },
     {
         "type": "real",
         "name": "classroom",
-        "name_full": "Cheerilee's Classroom",
+        "name_full": "Clase de Cheerilee",
         "thumbnail": "/media/rooms/classroom.png",
         "background": {
             "data": "/media/rooms/classroom.png",
@@ -141,7 +141,7 @@
             }
         ],
         "user_count": 0,
-        "user_noun": "eager students",
+        "user_noun": "estudiantes",
         "unlisted": false
     },
     {
@@ -155,13 +155,13 @@
             "height": 660
         },
         "user_count": 0,
-        "user_noun": "apples",
+        "user_noun": "manzanitas",
         "unlisted": false
     },
     {
         "type": "real",
         "name": "everfree_forest",
-        "name_full": "Everfree Forest",
+        "name_full": "Bosque Everfree",
         "thumbnail": "/media/rooms/everfreeforest-thumb.png",
         "background": {
             "data": "/media/rooms/everfreeforest.png",
@@ -169,13 +169,13 @@
             "height": 660
         },
         "user_count": 0,
-        "user_noun": "scared fillies",
+        "user_noun": "ponis asustadisos",
         "unlisted": false
     },
     {
         "type": "real",
         "name": "zecoras_house",
-        "name_full": "Zecora's house",
+        "name_full": "Casa de Zecora",
         "thumbnail": "/media/rooms/zecoras-house2-thumb.png",
         "background": {
             "data": "/media/rooms/zecoras-house2.png",
@@ -183,7 +183,7 @@
             "height": 660
         },
         "user_count": 0,
-        "user_noun": "rhyming zebras",
+        "user_noun": "zebras que riman",
         "unlisted": true
     },
     {
@@ -211,13 +211,13 @@
             "height": 660
         },
         "user_count": 0,
-        "user_noun": "posh ponies",
+        "user_noun": "ponis de clase alta",
         "unlisted": false
     },
     {
         "type": "real",
         "name": "dungeon",
-        "name_full": "Dungeon",
+        "name_full": "Calabozo",
         "thumbnail": "/media/rooms/dungeon-thumb.png",
         "background": {
             "data": "/media/rooms/dungeon.png",
@@ -225,13 +225,13 @@
             "height": 660
         },
         "user_count": 0,
-        "user_noun": "prisoners",
+        "user_noun": "prisioneros",
         "unlisted": false
     },
     {
         "type": "real",
         "name": "crystal_kingdom",
-        "name_full": "Crystal Kingdom",
+        "name_full": "Imperio de Cristal",
         "thumbnail": "/media/rooms/crystal-kingdom-thumb.png",
         "background": {
             "data": "/media/rooms/crystal-kingdom.png",
@@ -239,13 +239,13 @@
             "height": 660
         },
         "user_count": 0,
-        "user_noun": "crystal <3s",
+        "user_noun": "ponis cristalinos",
         "unlisted": false
     },
     {
         "type": "real",
         "name": "credits",
-        "name_full": "ponyplace credits",
+        "name_full": "Créditos de ponyplace",
         "thumbnail": "/media/rooms/cave-thumb.png",
         "background": {
             "data": "/media/rooms/cave.png",
@@ -263,7 +263,7 @@
             }
         ],
         "user_count": 0,
-        "user_noun": "inquiring minds",
+        "user_noun": "mentes inquisidoras",
         "unlisted": false
     }
 ]
