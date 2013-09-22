@@ -99,7 +99,7 @@ User.getSpecialStatus = function (nick) {
 };
 User.isModerator = function (nick) {
     var status = this.getSpecialStatus(nick);
-    return (status === 'moderator' || status === 'developer' || status === 'creator' || status === 'bot');
+    return (status === 'moderador' || status === 'desarrollador' || status === 'creador' || status === 'bot');
 };
 User.checkBypass = function (nick, bypass) {
     if (!this.bypass.hasOwnProperty(nick)) {
@@ -145,10 +145,10 @@ User.assert = function (assertion, callback) {
 };
 User.createAccount = function (nick, email) {
     if (this.hasAccount(nick)) {
-        throw new Error('Account with given nick already exists.');
+        throw new Error('Ya existe una cuenta con ese nombre.');
     }
     if (this.emails.hasOwnProperty(email)) {
-        throw new Error('Account with given email already exists.');
+        throw new Error('Ya existe una cuenta con ese email.');
     }
     this.accounts[nick] = {
         email: email
@@ -158,7 +158,7 @@ User.createAccount = function (nick, email) {
 };
 User.deleteAccount = function (nick) {
     if (!this.hasAccount(nick)) {
-        throw new Error('No account with given nick exists.');
+        throw new Error('No existe ninguna cuenta con ese nombre.');
     }
     delete this.emails[this.accounts[nick].email];
     delete this.accounts[nick];
@@ -187,7 +187,7 @@ User.getUserData = function (nick, property, defaultValue) {
 };
 User.setUserData = function (nick, property, value) {
     if (!this.hasAccount(nick)) {
-        throw new Error('There is no account with the given nick.');
+        throw new Error('No existe ninguna cuenta con ese nombre.');
     }
     this.accounts[nick][property] = value;
     this.save();
@@ -267,7 +267,7 @@ User.isHouseLocked = function (nick) {
 
 User.get = function (nick) {
     if(!this.has(nick)) {
-        throw new Error("There is no user named: " + nick);
+        throw new Error("Ningún usuario se llama " + nick);
     }
 
     return this.users[nick];
