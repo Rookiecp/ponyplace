@@ -51,7 +51,7 @@
         },
         add: function (nick, obj, special, me, doLog) {
             if (this.has(nick)) {
-                throw new Error("There is already a user with the same nick.");
+                throw new Error("Ya existe un usuario con ese nombre.");
             }
 
             var isOwnNick = nick === myNick;
@@ -185,7 +185,7 @@
         },
         hasCheck: function (nick) {
             if (!this.has(nick)) {
-                throw new Error('There is no user with the nick: "' + nick + '"');
+                throw new Error('Ningún usuario se llama "' + nick + '"');
             }
         },
         forEach: function (callback) {
@@ -204,15 +204,15 @@
                 if (myRoom.type === 'real') {
                     str = myRoom.name;
                 } else if (myRoom.type === 'ephemeral') {
-                    str = myRoom.name + " (owned by " + myRoom.user_nick + ")";
+                    str = myRoom.name + " (de " + myRoom.user_nick + ")";
                 } else if (myRoom.type === 'house') {
-                    str = myRoom.user_nick + "'s house";
+                    str = myRoom.user_nick + "(casa)";
                 }
-                str += ' - ' + this.userCount + '/' + globalUserCount + ' users';
+                str += ' - ' + this.userCount + '/' + globalUserCount + ' usuarios';
             } else {
-                str = globalUserCount + ' users online';
+                str = globalUserCount + ' usuarios conectados';
             }
-            str += ' (' + globalModCount + ' mods online)';
+            str += ' (' + globalModCount + ' mods conectados)';
             appendText(this.userCounter, str);
         }
     };
@@ -360,11 +360,11 @@
     function logKickNoticeInChat(modNick, modSpecial, kickeeNick, kickeeSpecial, reason) {
         var lines = [
             ['nick', kickeeNick, kickeeSpecial],
-            ['text', ' was kicked by '],
+            ['text', ' fué kickeado por '],
             ['nick', modNick, modSpecial]
         ];
         if (reason) {
-            lines.push(['text', ' because: "' + reason + '"']);
+            lines.push(['text', ' razón: "' + reason + '"']);
         }
         chatPrint(['chatlog'], lines, 'kick');
     }
@@ -372,58 +372,58 @@
     function logKickBanNoticeInChat(modNick, modSpecial, kickeeNick, kickeeSpecial, reason) {
         var lines = [
             ['nick', kickeeNick, kickeeSpecial],
-            ['text', ' was kicked and banned by '],
+            ['text', ' fué kickeado y baneado por '],
             ['nick', modNick, modSpecial]
         ];
         if (reason) {
-            lines.push(['text', ' because: "' + reason + '"']);
+            lines.push(['text', ' razón: "' + reason + '"']);
         }
         chatPrint(['chatlog'], lines, 'kick');
     }
 
     function logBroadcastInChat(msg) {
         chatPrint(['chatlog'], [
-            ['text', 'BROADCAST: ' + msg]
+            ['text', 'MENSAJE: ' + msg]
         ], 'broadcast');
     }
 
     function logSentConsoleCommandInChat(msg) {
         chatPrint(['chatlog'], [
-            ['text', 'CONSOLE <- /' + msg]
+            ['text', 'CONSOLA <- /' + msg]
         ], 'console');
     }
 
     function logConsoleMessageInChat(msg) {
         chatPrint(['chatlog'], [
-            ['text', 'CONSOLE -> ' + msg]
+            ['text', 'CONSOLA -> ' + msg]
         ], 'console');
     }
 
     function logJoinInChat(nick, special) {
         chatPrint(['chatlog'], [
             ['nick', nick, special],
-            ['text', ' joined']
+            ['text', ' entró a la sala']
         ], 'leave-join');
     }
 
     function logLeaveInChat(nick, special) {
         chatPrint(['chatlog'], [
             ['nick', nick, special],
-            ['text', ' left']
+            ['text', ' se fué']
         ], 'leave-join');
     }
 
     function logRoomJoinInChat(name, name_full) {
         chatPrint(['chatlog'], [
             ['nick', myNick, mySpecialStatus],
-            ['text', ' joined the room ' + name + ' ("' + name_full + '")']
+            ['text', ' ha entrado en la sala ' + name + ' ("' + name_full + '")']
         ], 'leave-join');
     }
 
     function logEphemeralRoomJoinInChat(name) {
         chatPrint(['chatlog'], [
             ['nick', myNick, mySpecialStatus],
-            ['text', ' joined the ephemeral room "' + name + '"']
+            ['text', ' ha entrado en la sala ephemeral "' + name + '"']
         ], 'leave-join');
     }
 
@@ -431,12 +431,12 @@
         if (nick !== myNick) {
             chatPrint(['chatlog'], [
                 ['nick', myNick, mySpecialStatus],
-                ['text', ' entered the house of user with nick: "' + nick + '"']
+                ['text', ' ha entrado en la casa de "' + nick + '"']
             ], 'leave-join');
         } else {
             chatPrint(['chatlog'], [
                 ['nick', myNick, mySpecialStatus],
-                ['text', ' entered your house']
+                ['text', ' ha entrado en tu casa']
             ], 'leave-join');
         }
     }
@@ -447,7 +447,7 @@
 
         // refresh button
         var refreshbutton = document.createElement('button');
-        appendText(refreshbutton, 'Refresh list');
+        appendText(refreshbutton, 'Recargar lista');
         refreshbutton.onclick = function () {
             socket.send(JSON.stringify({
                 type: 'room_list'
@@ -457,9 +457,9 @@
 
         // create new button
         var newbtn = document.createElement('button');
-        appendText(newbtn, 'Create room');
+        appendText(newbtn, 'Crear sala');
         newbtn.onclick = function () {
-            var roomName = prompt('Create an ephemeral room:\nChoose a room name (cannot contain spaces)', '');
+            var roomName = prompt('Creando una sala ephemeral:\nElige un nombre de sala (sin espacios)', '');
             if (roomName.indexOf(' ') === -1) {
                 socket.send(JSON.stringify({
                     type: 'room_change',
@@ -468,7 +468,7 @@
                 roomlist.style.display = 'none';
                 roomlistopen = false;
             } else {
-                alert('Room names cannot contain spaces.');
+                alert('Los nombres de sala no deben contener espacios.');
             }
         };
         roomlist.appendChild(newbtn);
@@ -487,9 +487,9 @@
             if (data.type === 'real') {
                 appendText(title, data.name_full + ' (' + data.user_count + ' ' + data.user_noun + ')');
             } else if (data.type === 'ephemeral') {
-                appendText(title, '"' + data.name + '" (ephemeral; ' + data.user_count + ' users)');
+                appendText(title, '"' + data.name + '" (ephemeral; ' + data.user_count + ' usuarios)');
             } else if (data.type === 'house') {
-                appendText(title, data.user_nick + "'s house (" + data.user_count + " users)");
+                appendText(title, data.user_nick + "'(casa," + data.user_count + " usuarios)");
             }
             preview.appendChild(title);
             
@@ -564,7 +564,7 @@
                     createPartyWidget(widget, element);
                 break;
                 default:
-                    console.log('Unknown widget type: ' + widget.type);
+                    console.log('No se encuentra el widget: ' + widget.type);
                     return;
                 break;
             }
@@ -627,7 +627,7 @@
     function handleItemClick(name, obj) {
         if (obj.type === 'room_background') {
             if ((myRoom.type === 'house' || myRoom.type === 'ephemeral') && myNick === myRoom.user_nick) {
-                if (confirm('Do you want to this room\'s background to: "' + obj.name_full + '"?')) {
+                if (confirm('Quieres cambiar el fondo de esta sala a "' + obj.name_full + '"?')) {
                     socket.send(JSON.stringify({
                         type: 'change_room_background',
                         bg_name: name,
@@ -635,7 +635,7 @@
                     }));
                 }
             } else {
-                alert("You can only change the background of rooms you own, or your house.");
+                alert("Sólo puedes cambiarle el fondo a tus salas y a tu casa.");
             }
         } else if (obj.type === 'effect') {
             me.effect = obj.effect;
@@ -696,7 +696,7 @@
             lastmove = cur;
         } else {
             chatPrint(['chatlog'], [
-                ['text', 'You are doing that too often.']
+                ['text', 'Estás haciendo eso muchas veces.']
             ], 'console');
         }
     }
@@ -711,7 +711,7 @@
         }
         function logFail () {
             chatPrint([messages], [
-                ['text', 'warning: sending the previous message failed - user is not online']
+                ['text', 'error: el usuario no está online']
             ], 'leave-join');
             messages.scrollTop = messages.scrollHeight;
         }
@@ -732,7 +732,7 @@
         if (openPMLogs.hasOwnProperty(nick)) {
             openPMLogs[nick].popup.show();
         } else {
-            var popup = makePopup('.pm-log', 'PRIVMSG - ' + nick, true, 250, 250, true, function () {
+            var popup = makePopup('.pm-log', 'Mensaje Privado - ' + nick, true, 250, 250, true, function () {
                 delete openPMLogs[nick];
                 popup.destroy();
             });
@@ -763,7 +763,7 @@
 
             var replybtn = document.createElement('button');
             replybtn.className = 'pm-log-replybtn';
-            appendText(replybtn, 'Send');
+            appendText(replybtn, 'Enviar');
             replybtn.onclick = function () {
                 doSend();
             };
@@ -798,7 +798,7 @@
             openProfiles[profile.nick].hide();
         }
 
-        var popup = makePopup('.profile', 'Profile - ' + profile.nick, true, 250, 250, true, function () {
+        var popup = makePopup('.profile', 'Perfil - ' + profile.nick, true, 250, 250, true, function () {
             delete openProfiles[profile.nick];
             popup.destroy();
         });
@@ -808,16 +808,16 @@
         popup.content.appendChild(h3);
 
         if (profile.online) {
-            appendText(popup.content, profile.nick + ' is online');
+            appendText(popup.content, profile.nick + ' está conectado');
         } else {
-            appendText(popup.content, profile.nick + " isn't online");
+            appendText(popup.content, profile.nick + " no está conectado");
         }
 
         var button;
 
         if (friends.indexOf(profile.nick) !== -1) {
             button = document.createElement('button');
-            appendText(button, 'Remove friend');
+            appendText(button, 'Eliminar amigo');
             button.onclick = function (e) {
                 socket.send(JSON.stringify({
                     type: 'friend_remove',
@@ -828,7 +828,7 @@
             popup.content.appendChild(button);
         } else {
             button = document.createElement('button');
-            appendText(button, 'Add friend');
+            appendText(button, 'Agregar amigo');
             button.onclick = function (e) {
                 socket.send(JSON.stringify({
                     type: 'friend_add',
@@ -844,7 +844,7 @@
         icon.src = '/media/icons/house.png';
         icon.className = 'house-link';
         button.appendChild(icon);
-        appendText(button, 'Visit house');
+        appendText(button, 'Visitar casa');
         button.onclick = function (e) {
             socket.send(JSON.stringify({
                 type: 'room_change',
@@ -855,28 +855,28 @@
         popup.content.appendChild(button);
 
         button = document.createElement('button');
-        appendText(button, 'Report to moderators');
+        appendText(button, 'Reportar a moderadores');
         button.onclick = function () {
-            var reason = prompt('This will report this person to the moderators.\nOnly do this if you believe they have done something wrong.\n\nReason for reporting:', '');
+            var reason = prompt('Esto reportará este usuario a los moderadores.\nSólo debes hacerlo si crees que han echo algo malo.\n\nRazón del reporte:', '');
             if (reason !== null) {
-                if (confirm('By clicking OK you accept that frivolous or false reports may lead to warnings, kicking, or being banned.')) {
+                if (confirm('Al hacer click en OK aceptas que los reportes frívolos o falsos pueden resultar en advertencias, kicks o incluso baneos.')) {
                     socket.send(JSON.stringify({
                         type: 'user_report',
                         nick: profile.nick,
                         reason: reason
                     }));
-                    alert('Your report has been sent and will be reviewed shortly.');
+                    alert('El reporte ha sido enviado y será visto por nuestros moderadores pronto.');
                     popup.hide();
                 }
             } else {
-                alert('You must specify a reason for reporting them.');
+                alert('Debes especificar una razón para reportar.');
             }
         };
         popup.content.appendChild(button);
 
         if (profile.online) {
             button = document.createElement('button');
-            appendText(button, 'Send private message');
+            appendText(button, 'Enviar mensaje privado');
             button.onclick = function (e) {
                 showPMLog(profile.nick);
                 popup.hide();
@@ -884,7 +884,7 @@
             popup.content.appendChild(button);
 
             button = document.createElement('button');
-            appendText(button, 'Go to current room');
+            appendText(button, 'Ir a sala donde está');
             button.onclick = function (e) {
                 socket.send(JSON.stringify({
                     type: 'room_change',
@@ -901,9 +901,9 @@
                 popup.content.appendChild(document.createElement('hr'));
 
                 button = document.createElement('button');
-                appendText(button, 'Kick');
+                appendText(button, 'Kickear');
                 button.onclick = function (e) {
-                    var reason = prompt('Kick reason:', '');
+                    var reason = prompt('Razón del kick:', '');
                     if (reason !== null) {
                         socket.send(JSON.stringify({
                             type: 'console_command',
@@ -917,7 +917,7 @@
                 button = document.createElement('button');
                 appendText(button, 'Kickban');
                 button.onclick = function (e) {
-                    var reason = prompt('Kickban reason:', '');
+                    var reason = prompt('Razón del kickban:', '');
                     if (reason !== null) {
                         socket.send(JSON.stringify({
                             type: 'console_command',
