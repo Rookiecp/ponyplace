@@ -726,11 +726,11 @@ function handleCommand(cmd, myNick, user) {
             warnee = cmd.substr(5, pos-5);
             reason = cmd.substr(pos+1);
         } else {
-            sendLine('Two parameters required for /warn.');
+            sendLine('Se necesitan dos parametros para usar /warn.');
             return;
         }
         if (!User.hasAccount(warnee)) {
-            sendLine('There is no user with nick: "' + kickee + '"');
+            sendLine('Ningún usuario se llama "' + kickee + '"');
             return;
         }
 
@@ -741,10 +741,10 @@ function handleCommand(cmd, myNick, user) {
                 mod_special: user.special,
                 reason: reason
             });
-            sendLine('"' + warnee + '" was warned and will see the warning immediately.');
+            sendLine('"' + warnee + '" ha sido advertido y verá la advertencia de inmediato.');
         } else {
             User.addWarning(warnee, user.nick, user.special, reason);
-            sendLine('"' + warnee + '" was warned and will see the warning upon their next login.');
+            sendLine('"' + warnee + '" ha sido advertido y verá la advertencia cuando se conecte.');
         }
         modLogger.logWarn(myNick, warnee, reason);
         modMessages.logWarn(myNick, warnee, reason);
@@ -755,38 +755,38 @@ function handleCommand(cmd, myNick, user) {
             var room = cmd.substr(5, pos-5);
             var movee = cmd.substr(pos+1);
             if (!User.has(movee)) {
-                sendLine('There is no online user with nick: "' + movee + '"');
+                sendLine('Ningún usuario se llama "' + movee + '"');
                 return;
             }
             if (User.isModerator(movee)) {
-                sendLine('You cannot move other moderators');
+                sendLine('No puedes mover otros moderadores');
                 return;
             }
             modLogger.logMove(myNick, movee, User.get(movee).room, room, User.get(movee).obj);
             doRoomChange(room, User.get(movee));
-            sendLine('You were forcibly moved room by ' + myNick, movee);
+            sendLine('Has sido movido a la fuerza por ' + myNick, movee);
         } else {
-            sendLine('/move takes a room and a nickname');
+            sendLine('/move necesita una sala y un nombre de usuario');
             return;
         }
     // check alias
     } else if (canMod && cmd.substr(0, 8) === 'aliases ') {
         var checked = cmd.substr(8);
         if (!User.has(checked)) {
-            sendLine('There is no online user with nick: "' + checked + '"');
+            sendLine('Ningún usuario se llama "' + checked + '"');
             return;
         }
         var IP = User.get(checked).conn.remoteAddress;
         // Find aliases
         var aliasCount = 0;
-        sendLine('User with IP ' + IP + ' has the following aliases:');
+        sendLine('El usuario con la IP ' + IP + ' tiene estos alias:');
         User.forEach(function (iterUser) {
             if (iterUser.conn.remoteAddress === IP) {
                 sendLine((aliasCount+1) + '. Alias "' + iterUser.nick + '"');
                 aliasCount++;
             }
         });
-        sendLine('(' + aliasCount + ' aliases total)');
+        sendLine('(' + aliasCount + ' alias total)');
     // broadcast message
     } else if (canMod && cmd.substr(0, 10) === 'broadcast ') {
         var broadcast = cmd.substr(10);
@@ -796,8 +796,8 @@ function handleCommand(cmd, myNick, user) {
                 msg: broadcast
             });
         });
-        console.log('Broadcasted message "' + broadcast + '" from user "' + myNick + '"');
-        sendLine('Broadcasted message');
+        console.log('Mensaje "' + broadcast + '" del usuario "' + myNick + '"');
+        sendLine('Mensaje enviado');
         modLogger.logBroadcast(myNick, broadcast);
     // moderation log
     } else if (canMod && cmd.substr(0, 6) === 'modlog') {
@@ -811,7 +811,7 @@ function handleCommand(cmd, myNick, user) {
         }
         count = parseInt(count) || 10;
         var items = modLogger.getLast(count, filter);
-        sendLine('Showing ' + items.length + ' log items' + (filter ? ' filtered by type "' + filter + '"' : ''));
+        sendLine('Mostrando ' + items.length + ' log de items + (filter ? ' filtrados por tipo "' + filter + '"' : ''));
         user.send({
             type: 'mod_log',
             cmd: cmd,
@@ -829,7 +829,7 @@ function handleCommand(cmd, myNick, user) {
         }
         count = parseInt(count) || 10;
         var messages = modMessages.getLast(count, filter);
-        sendLine('Showing ' + messages.length + ' messages' + (filter ? ' filtered by nick "' + filter + '"' : ''));
+        sendLine('Mostrando ' + messages.length + ' mensajes' + (filter ? ' filtrados por el nick "' + filter + '"' : ''));
         user.send({
             type: 'mod_msgs',
             cmd: cmd,
@@ -841,7 +841,7 @@ function handleCommand(cmd, myNick, user) {
             User.forEach(function (iterUser) {
                 iterUser.send({
                     type: 'broadcast',
-                    msg: '** ' + user.nick.toUpperCase() + ' HAS DISENGAGED THE ROYAL CANTERLOT VOICE - YOU MAY NOW SPEAK, AND BE HEARD **'
+                    msg: '** ' + user.nick.toUpperCase() + ' AHORA PUEDE USAR LA VOZ REAL DE CANTERLOT - PUEDES HABLAR Y SER ESCUCHADO **'
                 });
             });
             globalMute = false;
@@ -849,14 +849,14 @@ function handleCommand(cmd, myNick, user) {
             User.forEach(function (iterUser) {
                 iterUser.send({
                     type: 'broadcast',
-                    msg: '** NOTE: ' + user.nick.toUpperCase() + ' HAS ENGAGED THE ROYAL CANTERLOT VOICE - YOU MAY SPEAK, BUT YOU SHALL NOT BE HEARD **'
+                    msg: '** NOTE: ' + user.nick.toUpperCase() + ' AHORA NO PUEDE USAR LA VOZ DE CANTERLOT - PUEDES HABLAR, PERO NO SERÁS ESCUCHADO **'
                 });
             });
             globalMute = true;
         }
     // unknown
     } else {
-        sendLine('Unknown command');
+        sendLine('Comando desconocido.');
     }
 }
 
@@ -996,7 +996,7 @@ wsServer.on('request', function(request) {
                         if (User.isHouseLocked(houseName) && myNick !== houseName) {
                             user.send({
                                 type: 'console_msg',
-                                msg: 'That house is locked.'
+                                msg: 'Esa casa está bloqueada.'
                             });
                         } else {
                             doRoomChange(msg.name, user);
@@ -1025,7 +1025,7 @@ wsServer.on('request', function(request) {
                 } else {
                     user.send({
                         type: 'console_msg',
-                        msg: 'There is no user with nick: "' + msg.nick + '"'
+                        msg: 'Ningún usuario se llama "' + msg.nick + '"'
                     });
                 }
             break;
@@ -1061,14 +1061,14 @@ wsServer.on('request', function(request) {
                 if (roomManager.has(msg.room)) {
                     user.send({
                         type: 'console_msg',
-                        msg: 'You cannot change the backgrounds of default rooms.'
+                        msg: 'No puedes cambiarle el fondo a salas normales.'
                     });
                 } else if (roomManager.hasEphemeral(msg.room)) {
                     room = roomManager.getEphemeral(msg.room);
                     if (room.user_nick !== myNick) {
                         user.send({
                             type: 'console_msg',
-                            msg: 'You can only change the backgrounds of rooms you own.'
+                            msg: 'Sólo puedes cambiarle el fondo a tus salas.'
                         });
                         room = null;
                     }
@@ -1076,7 +1076,7 @@ wsServer.on('request', function(request) {
                     if (msg.room.substr(6) !== myNick) {
                         user.send({
                             type: 'console_msg',
-                            msg: 'You can only change the backgrounds of rooms you own.'
+                            msg: 'Solo le puedes cambiar el fondo a tus salas.'
                         });
                     } else {
                         room = User.getHouse(msg.room.substr(6));
@@ -1107,12 +1107,12 @@ wsServer.on('request', function(request) {
                         User.setHouse(myNick, room);
                         user.send({
                             type: 'console_msg',
-                            msg: 'House background ' + (msg.bg_name ? 'changed.' : 'reset.')
+                            msg: 'Fondo de casa ' + (msg.bg_name ? 'cambiado.' : 'reseteado.')
                         });
                     } else {
                         user.send({
                             type: 'console_msg',
-                            msg: 'Room background ' + (msg.bg_name ? 'changed.' : 'reset.')
+                            msg: 'Fondo de sala ' + (msg.bg_name ? 'cambiado.' : 'reset.')
                         });
                     }
                     User.forEach(function (iterUser) {
