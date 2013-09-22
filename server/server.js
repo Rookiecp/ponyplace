@@ -38,7 +38,7 @@ function originIsAllowed(origin) {
     }
 }
 
-var badRegex = /fuck|shit|milf|bdsm|fag|faggot|nigga|nigger|clop|(\[\]\(\/[a-zA-Z0-9\-_]+\))/gi;
+var badRegex = /follar|mierda|puto|puta|maricon|hijo de puta|coño|verga|pija|orto|(\[\]\(\/[a-zA-Z0-9\-_]+\))/gi;
 
 var validNickRegex = /^[a-zA-Z0-9_]+$/g;
 
@@ -140,17 +140,17 @@ var roomManager = {
                 return this.rooms[i];
             }
         }
-        throw new Error('There is no room with the name: "' + name + '"');
+        throw new Error('Ninguna sala se llama "' + name + '"');
     },
     getEphemeral: function (name) {
         if (this.hasEphemeral(name)) {
             return this.ephemeralRooms[name];
         }
-        throw new Error('There is no ephemeral room with the name: "' + name + '"');
+        throw new Error('Ninguna sala ephemeral se llama "' + name + '"');
     },
     createEphemeral: function (name, owner) {
         if (this.hasEphemeral(name)) {
-            throw new Error('There is already an ephemeral room with the name: "' + name + '"');
+            throw new Error('Ya existe una sala ephemeral llamada "' + name + '"');
         }
         return this.ephemeralRooms[name] = {
             type: 'ephemeral',
@@ -372,7 +372,7 @@ var modMessages = {
             if (User.isModerator(iterUser.nick)) {
                 iterUser.send({
                     type: 'console_msg',
-                    msg: 'There is a new moderator report. View it with /modmsgs'
+                    msg: 'Nuevo reporte de moderador. Míralo diciendo /modmsgs'
                 });
             }
         });
@@ -502,18 +502,18 @@ function handleCommand(cmd, myNick, user) {
         user.send({
             type: 'help',
             lines: [
-                'Three user commands are available: 1) profile, 2) list, 3) join',
-                "1. profile - Brings up someone's profile, e.g. /profile someguy",
-                '2. list - Lists available rooms, e.g. /list',
-                "3. join - Joins a room, e.g. /join library - if room doesn't exist, an ephemeral room will be created - you can also enter people's houses, e.g. /join house ajf",
-                'Three house commands are available: 1) empty, 2) lock, 3) unlock',
-                '1. empty - Removes everyone else from your house, e.g. /empty',
-                '2. lock - Prevents anyone else from joining your house, e.g. /lock',
-                '3. unlock - Lets other people join your house again, e.g. /unlock'
+                'Tres comandos para usuarios están disponibles: 1) profile, 2) list, 3) join',
+                "1. profile - Muestra el perfil de alguien, e.j. /profile algunpony",
+                '2. list - Muestra una lista de las salas disponibles, e.j. /list',
+                "3. join - Te permite entrar a una sala, e.j. /join library - si la sala no existe, se creara una sala ephemeral - también puedes entrar a casas de usuarios, e.j. /join house algunpony",
+                'Tres comandos para casas están disponibles: 1) empty, 2) lock, 3) unlock',
+                '1. empty - Echa a todos de tu casa, e.j. /empty',
+                '2. lock - Previene que alguien entre a tu casa, e.j. /lock',
+                '3. unlock - Deja que todos puedan entrar a tu casa de nuevo, e.j. /unlock'
             ]
         });
         if (isMod) {
-            sendLine('See also: /modhelp');
+            sendLine('Mira también: /modhelp');
         }
     // profile
     } else if (cmd.substr(0, 8) === 'profile ') {
@@ -525,7 +525,7 @@ function handleCommand(cmd, myNick, user) {
                 moderator_mode: isMod
             });
         } else {
-            sendLine('There is no user with nick: "' + nick + '"');
+            sendLine('Ningún usuario se llama "' + nick + '"');
         }
     // join room
     } else if (cmd.substr(0, 5) === 'join ') {
@@ -535,12 +535,12 @@ function handleCommand(cmd, myNick, user) {
             if (roomName.substr(0, 6) === 'house ') {
                 var houseName = roomName.substr(6);
                 if (User.isHouseLocked(houseName) && myNick !== houseName && !User.isModerator(myNick)) {
-                    sendLine('That house is locked.');
+                    sendLine('Esta sala está bloqueada.');
                 } else {
                     doRoomChange(roomName, user);
                 }
             } else {
-                sendLine('Room names cannot contain spaces.');
+                sendLine('Los nombres de sala no pueden contener espacios.');
             }
         } else {
             doRoomChange(roomName, user);
@@ -555,58 +555,58 @@ function handleCommand(cmd, myNick, user) {
                 roomNames.push(roomList[i].name + ' (ephemeral)');
             }
         }
-        sendLine(roomList.length + ' rooms available: ' + roomNames.join(', '));
+        sendLine(roomList.length + ' salas disponibles: ' + roomNames.join(', '));
     // empty house
     } else if (cmd.substr(0, 5) === 'empty') {
         var count = 0;
         User.forEach(function (iterUser) {
             if (iterUser.room === 'house ' + myNick && iterUser.nick !== myNick) {
                 doRoomChange('ponyville', iterUser);
-                sendLine('Removed user with nick: "' + iterUser.nick + '" from your house.');
-                sendLine('The user with nick: "' + myNick + '" removed you from their house.', iterUser.nick);
+                sendLine('Se ha removido al usuario "' + iterUser.nick + '" de tu casa.');
+                sendLine('El usuario "' + myNick + '" te ha removido de su casa.', iterUser.nick);
                 count++;
             }
         });
         if (count) {
-            sendLine('Removed ' + count + ' users from your house.');
+            sendLine('Removidos ' + count + ' usuarios de tu casa.');
         } else {
-            sendLine('There are no other users in your house.');
+            sendLine('No hay usuarios en tu casa.');
         }
     // lock house
     } else if (cmd.substr(0, 4) === 'lock') {
         var house = User.getHouse(myNick);
         if (house.locked) {
-            sendLine('Your house is already locked. Use /unlock to unlock it.');
+            sendLine('Tu casa está bloqueada. Usa /unlock para desbloquearla.');
         } else {
             house.locked = true;
             User.setHouse(myNick, house);
-            sendLine('Your house was locked. Use /unlock to unlock it.');
+            sendLine('Tu casa ha sido bloqueada. Usa /unlock para desbloquearla.');
         }
     // unlock house
     } else if (cmd.substr(0, 6) === 'unlock') {
         var house = User.getHouse(myNick);
         if (!house.locked) {
-            sendLine('Your house is already unlocked. Use /lock to lock it.');
+            sendLine('Tu casa está desbloqueada. Usa /lock para bloquearla.');
         } else {
             house.locked = false;
             User.setHouse(myNick, house);
-            sendLine('Your house was unlocked. Use /lock to lock it.');
+            sendLine('Tu casa ha sido desbloqueada. Usa /lock para bloquearla.');
         }
     // mod help
     } else if (canMod && cmd.substr(0, 7) === 'modhelp') {
         user.send({
             type: 'help',
             lines: [
-                'Nine mod commands available: 1) kick, 2) kickban, 3) warn, 4) unban, 5) broadcast, 6) aliases, 7) move, 8) modlog, 9) modmsgs',
-                "1. kick & 2. kickban - kick takes the nick of someone, they (& any aliases) will be kicked, e.g. /kick sillyfilly. kickban is like kick but also permabans by IP. kick and kickban can also take a second parameter for a reason message, e.g. /kick sillyfilly Don't spam the chat!",
-                '3. warn - formally warns someone (shown immediately if online or upon next login if not), e.g. /warn somefilly Stop spamming. Final warning.',
-                '4. unban - Unbans an IP, e.g. /unban 192.168.1.1',
-                '5. broadcast - Sends a message to everyone on the server, e.g. /broadcast Hello all!',
-                "6. aliases - Lists someone's aliases (people with same IP address), e.g. /aliases joebloggs",
-                '7. move - Forcibly moves a user to a room, e.g. /move canterlot sillyfilly',
-                "8. modlog - Shows moderator activity log. Optionally specify count (default 10), e.g. /modlog 15. You can also specify filter (ban/unban/kick/move/broadcast), e.g. /modlog 25 unban",
-                "9. modmsgs - Shows messages/reports to mods. Optionally specify count (default 10), e.g. /modmsgs 10. You can also specify nick filter to see messages concerning or by someone, e.g. /modmsgs 25 somefilly",
-                'See also: /help'
+                'Nueve comandos de moderadores están disponibles: 1) kick, 2) kickban, 3) warn, 4) unban, 5) broadcast, 6) aliases, 7) move, 8) modlog, 9) modmsgs',
+                "1. kick & 2. kickban - kick necesita el nombre de alguien, el (y todos los alias) serán echados, e.j. /kick algunpony. kickban es como el kick pero también banea por IP. kick y kickban también pueden contener un segundo parámetro para especificar la razón, e.g. /kick algunpony No spamees en el chat!",
+                '3. warn - advierte formalmente a alguien (aparece inmediatamente si está online y si no, cuando se loguee), e.j. /warn algunpony Deja el spam. Advertencia final.',
+                '4. unban - Desbanea una IP, e.j. /unban 192.168.1.1',
+                '5. broadcast - Envía un mensaje a todos en el servidor, e.j. /broadcast Hola a todos!',
+                "6. aliases - Muestra una lista de los alias de una persona (usuarios con la misma IP), e.j. /aliases algunpony",
+                '7. move - Mueve por la fuerza a un usuario a determinada sala, e.j. /move canterlot algunpony',
+                "8. modlog - Muestra el log de la actividad de mods. Opcionalmente puedes especificar un número (10 por defecto), e.j. /modlog 15. También puedes especificar un filtro (ban/unban/kick/move/broadcast), e.j. /modlog 25 unban",
+                "9. modmsgs - Muestra mensajes/reportes a mods. Opcionalmente puedes especificar un número (10 por defecto), e.j. /modmsgs 10. También puedes especificar un nick de filtro para ver los mensajes hechos por cierto usuario, e.g. /modmsgs 25 algunpony",
+                'Mira también: /help'
 
             ]
         });
@@ -614,11 +614,11 @@ function handleCommand(cmd, myNick, user) {
     } else if (canMod && cmd.substr(0, 6) === 'unban ') {
         var IP = cmd.substr(6);
         if (!banManager.isIPBanned(IP)) {
-            sendLine('The IP ' + IP + ' is not banned.');
+            sendLine('La IP ' + IP + ' no está baneada.');
             return;
         }
         banManager.unbanIP(IP);
-        sendLine('Unbanned IP ' + IP);
+        sendLine('Desbaneada la IP ' + IP);
         modLogger.logUnban(myNick, IP);
     // kickbanning
     } else if (canMod && cmd.substr(0, 8) === 'kickban ') {
@@ -631,24 +631,24 @@ function handleCommand(cmd, myNick, user) {
             kickee = cmd.substr(8);
         }
         if (!User.has(kickee)) {
-            sendLine('There is no online user with nick: "' + kickee + '"');
+            sendLine('Ningún usuario se llama "' + kickee + '"');
             return;
         }
         if (User.isModerator(kickee)) {
-            sendLine('You cannot kickban other moderators');
+            sendLine('No puedes darle kickban a otros moderadores.');
             return;
         }
         var IP = User.get(kickee).conn.remoteAddress;
         banManager.addIPBan(IP);
-        sendLine('Banned IP ' + IP);
+        sendLine('Baneada la IP' + IP);
         var aliases = [];
         // Kick aliases
         User.forEach(function (iterUser) {
             if (iterUser.conn.remoteAddress === IP) {
                 // kick
                 iterUser.kick('ban', reason);
-                console.log('Kicked alias "' + iterUser.nick + '" of user with IP ' + IP);
-                sendLine('Kicked alias "' + iterUser.nick + '" of user with IP ' + IP);
+                console.log('Kickeado el alias "' + iterUser.nick + '" de usuario con la IP ' + IP);
+                sendLine('Kickeado el alias "' + iterUser.nick + '" del usuario con la IP ' + IP);
                 aliases.push({
                     nick: iterUser.nick,
                     room: iterUser.room,
@@ -683,7 +683,7 @@ function handleCommand(cmd, myNick, user) {
             kickee = cmd.substr(5);
         }
         if (!User.has(kickee)) {
-            sendLine('There is no online user with nick: "' + kickee + '"');
+            sendLine('Ningún usuario se llama "' + kickee + '"');
             return;
         }
         var IP = User.get(kickee).conn.remoteAddress;
@@ -693,8 +693,8 @@ function handleCommand(cmd, myNick, user) {
             if (iterUser.conn.remoteAddress === IP) {
                 // kick
                 iterUser.kick('kick', reason);
-                console.log('Kicked alias "' + iterUser.nick + '" of user with IP ' + IP);
-                sendLine('Kicked alias "' + iterUser.nick + '" of user with IP ' + IP);
+                console.log('Kickeado el alias "' + iterUser.nick + '" de usuario con la IP ' + IP);
+                sendLine('Kickeado el alias "' + iterUser.nick + '" del usuario con la IP ' + IP);
                 aliases.push({
                     nick: iterUser.nick,
                     room: iterUser.room,
